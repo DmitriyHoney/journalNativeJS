@@ -1,0 +1,11 @@
+- const nav = [ { icon: 'fa fa-calendar' }, { icon: 'fa fa-comment' }, { icon: 'fa fa-cog' } ]
+
+aside.sidebar
+    include ./avatar.pug
+    nav.sidebar-nav
+        ul.sidebar-menu
+            each item in nav
+                li.sidebar-menu__item
+                    a(href="#")
+                        i(class=item.icon)
+

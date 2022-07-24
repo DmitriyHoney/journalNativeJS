@@ -1,0 +1,90 @@
+@import 'normalize';
+@import 'variables';
+@import 'mixins';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  color: $text-cl;
+  background-color: $dark;
+}
+
+ul, li {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  height: 100vh;
+  display: flex;
+  & .sidebar {
+    padding: 20px 10px;
+    width: 75px;
+  }
+  & .main {
+    padding: 10px;
+    padding-top: 30px;
+    margin: 10px 10px 10px 0px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 30px;
+  }
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  display: block;
+  color: #fff;
+  &-info {
+    padding-left: 70px;
+    @include flex(center, flex-start);
+    gap: 4px;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 100%;
+    position: relative;
+    z-index: 44;
+  }
+  position: relative;
+  &-overlay {
+    @include transition;
+    position: absolute;
+    min-width: 0px;
+    height: 100%;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 25px;
+    opacity: 0;
+    z-index: -1;
+  }
+  &:hover {
+    & .avatar-overlay {
+      @include transition;
+      min-width: calc(100% + 190px);
+      opacity: 1;
+      z-index: 43;
+    }
+  }
+}
+
+@import 'sidebar';
+@import 'main';

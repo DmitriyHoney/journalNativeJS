@@ -1,0 +1,72 @@
+.sidebar {
+  background-color: $dark;
+  color: #fff;
+  &-nav {
+    margin-top: 15px;
+  }
+  &-menu {
+    &__item {
+      & a {
+        position: relative;
+        &::after {
+          content: '';
+          @include transition;
+          position: absolute;
+          background-color: $sky;
+          display: block;
+          width: 0px;
+          height: 100%;
+          left: 0px;
+          right: 0px;
+          top: 0px;
+          bottom: 0px;
+          border-radius: 15px;
+          opacity: 1;
+        }
+        &::before {
+          content: '';
+          @include transition;
+          position: absolute;
+          background-color: $active;
+          display: block;
+          width: calc(100% + 30px);
+          height: 0px;
+          // height: 100%;
+          left: 0px;
+          right: 0px;
+          // top: 0px;
+          bottom: 0px;
+          border-radius: 15px;
+          opacity: 1;
+        }
+        color: #fff;
+        display: block;
+        text-align: center;
+        padding: 10px 5px;
+        margin: 10px 0px;
+        border-radius: 15px;
+        &:first-child {
+          margin-top: 0px;
+        }
+        & i {
+          position: relative;
+          z-index: 99;
+          font-size: 22px;
+        }
+        &:hover {
+          &::after {
+            @include transition;
+            width: calc(100% + 30px);
+          }
+        }
+
+      }
+      &_act a::before {
+        @include transition;
+        // opacity: 1;
+        height: 100%;
+        z-index: 4;
+      }
+    }
+  }
+}
