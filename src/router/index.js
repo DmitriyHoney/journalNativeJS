@@ -1,6 +1,8 @@
 import BaseRouter from '@core/router.js';
+import NotFound from '@/components/NotFound/NotFound.js';
+// import Calendar from '@/components/Calendar/Calendar.js';
 
 export default new BaseRouter({
-  '/calendar': '@/components/Calendar/Calendar.js',
-  '404': '@/components/NotFound/NotFound.js'
+  // '/calendar': Calendar,
+  '404': NotFound
 });

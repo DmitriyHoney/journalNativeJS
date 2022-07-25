@@ -2,7 +2,7 @@
 import $ from './dom.js';
 
 
-class BaseComponent {
+export class BaseComponent {
   constructor(app, pathTemplate) {
     this.$ = $;
     this.$app = app;
@@ -10,10 +10,12 @@ class BaseComponent {
     this.pathTemplate = pathTemplate;
   }
   async render() {
-    let t1 = await import('@/components/NotFound/NotFound.js');
-    t1 = t1.default;
-    console.log(t1);
-    this.template = t1({ name: 'Hello mfuckers' });
+    // let t1 = await import('@/components/NotFound/NotFound.js');
+    // t1 = t1.default;
+    // console.log(t1);
+    // this.template = t1({ name: 'Hello mfuckers' });
+    console.log(111);
+    this.template = 'asd';
     this.$app.$root.clear();
     this.$app.$root.inner(this.template);
   }
@@ -21,12 +23,13 @@ class BaseComponent {
 
 
 export class CreateApp {
-  constructor(router) {
-    this.$router = router;
+  constructor() {
+    this.$router = null;
     this.$root = null;
   }
-  mount(selector) {
-    this.$root = $(selector);
+  mount({ root, router }) {
+    this.$root = $(root);
+    this.$router = router;
     const curUrl = window.location.pathname;
     this.$router.push(curUrl);
     return this;
@@ -35,9 +38,3 @@ export class CreateApp {
     return new BaseComponent(this, args);
   }
 }
-
-
-
-
-
-// export default BaseComponent;

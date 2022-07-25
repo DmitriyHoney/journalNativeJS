@@ -1,4 +1,6 @@
 
-import { App } from '@/index.js';
 
-export default App.createComponent('@/components/NotFound/404.pug');
+export default () => {
+  const { App } =  require('@/index.js');
+  App.createComponent('@/components/NotFound/404.pug');
+};

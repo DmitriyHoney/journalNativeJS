@@ -27,6 +27,8 @@ import './scss/style.scss';
 //     this.render(document.getElementById('app'));
 //   }
 // }
-export const App = new CreateApp(
-  router,
-).mount('.main');
+
+export const App = new CreateApp().mount({
+  root: '.main',
+  router
+});
