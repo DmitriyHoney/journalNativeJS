@@ -34,7 +34,7 @@ class Dependency {
   m1.price = 7;
   console.log(m1.state.total); // 14
 */
-class Model {
+export class Model {
   constructor({ state, computed }) {
     this.state = state;
     this.computed = computed;
@@ -97,7 +97,7 @@ class Model {
   с1.methods.incPrice();
   console.log(m1.state.price); // 6
 */
-class Controller {
+export class Controller {
   constructor({ model, methods }) {
     this.model = model;
     this.methods = methods;
@@ -114,9 +114,10 @@ class Controller {
 /*
 Данный класс принимает instance model, instance controller, template
 внутри доступны state, computed, methods.
-реализует функцию render, которая обновляет только тот узел DOM, который изменился
+реализует функцию render,
+которая обновляет только тот узел DOM, который изменился
 */
-class View {
+export class View {
   constructor({ model, controller, template }) {
     this.model = model;
     this.controller = controller;
@@ -125,37 +126,11 @@ class View {
 }
 
 
-const m1 = new Model({
-  state: {
-    price: 5,
-    quantity: 2
-  },
-  computed: {
-    total() {
-      return this.price * this.quantity;
-    }
+function createElement(tag, attrs, ...children) {
+  const element = Object.assign(document.createElement(tag), attrs);
+  for (const child of children) {
+    if (Array.isArray(child)) element.append(...child);
+    else element.append(child);
   }
-});
-
-const c1 = new Controller({
-  model: m1,
-  methods: {
-    incPrice() {
-      console.log(1111, this);
-      this.price++;
-    }
-  }
-});
-
-const v1 = new View({
-  model: m1,
-  controller: c1,
-  template: () => `<div class="test">
-      <span>Price: {{this.price}}</span>
-      <span>Total: {{this.total}}</span>
-      <button @onclick="{{this.incPrice}}">Inc</button>
-    </div>
-  `
-});
-
-
+  return element;
+}
