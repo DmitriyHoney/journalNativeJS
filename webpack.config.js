@@ -76,6 +76,16 @@ module.exports = {
   ],
   module: {
     rules: [
+      // {
+      //   test: /\.js|x$/,
+      //   exclude: /(node_modules|bower_components)/,
+      //   use: {
+      //     loader: 'babel-loader',
+      //     options: {
+      //       presets: ['plugin-transform-react-jsx']
+      //     }
+      //   }
+      // },
       {
         test: /\.css$/,
         use: [

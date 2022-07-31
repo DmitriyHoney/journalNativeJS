@@ -1,6 +1,10 @@
-import { Model, Controller, View } from '@/core/reactive.js';
+import BaseComponent from '@/core/reactive.js';
 
 function createElement(tag, attrs, ...children) {
+  if (typeof tag === 'object') {
+    return tag;
+  }
+
   const element = Object.assign(document.createElement(tag), attrs);
 
   for (const child of children) {
@@ -10,7 +14,36 @@ function createElement(tag, attrs, ...children) {
   return element;
 }
 
-const m1 = new Model({
+const Header = new BaseComponent({
+  state: {
+    key: 1,
+    title: 'Header'
+  },
+  computed: {
+    keyUpdated() {
+      return this.price * this.quantity;
+    }
+
+  },
+  methods: {
+    incKey() {
+      this.key++;
+    }
+
+  },
+  template: {
+    render({
+      state,
+      methods
+    }) {
+      return createElement("header", {
+        class: "header"
+      }, state.title, " ", state.key);
+    }
+
+  }
+});
+const comp1 = new BaseComponent({
   state: {
     price: 5,
     quantity: 2
@@ -20,25 +53,27 @@ const m1 = new Model({
       return this.price * this.quantity;
     }
 
-  }
-});
-const c1 = new Controller({
-  model: m1,
+  },
   methods: {
     incPrice() {
-      console.log(1111, this);
       this.price++;
+    }
+
+  },
+  template: {
+    render({
+      state,
+      methods
+    }) {
+      return createElement("div", {
+        class: "test"
+      }, createElement(Header, null), createElement("span", null, "Price: ", state.price), " ", createElement("br", null), createElement("span", null, "Quantity: ", state.quantity), " ", createElement("br", null), createElement("span", null, "Total: ", state.total), " ", createElement("br", null), createElement("button", {
+        onclick: methods.incPrice
+      }, "Inc"));
     }
 
   }
 });
-const v1 = new View({
-  model: m1,
-  controller: c1,
-  template: createElement("div", {
-    class: "test"
-  }, createElement("span", null, "Price: ", m1.state.price), createElement("span", null, "Total: ", m1.state.total), createElement("button", {
-    onclick: c1.methods.incPrice
-  }, "Inc"))
-});
-export default v1.template;
+window.comp1 = comp1;
+window.comp2 = Header;
+export default comp1;

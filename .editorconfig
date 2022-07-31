@@ -7,7 +7,7 @@ charset = utf-8
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[{*.js,*.mjs,*.ts,*.json,*.yml,*.css,*.scss}]
+[{*.js,*.jsx,*.mjs,*.ts,*.json,*.yml,*.css,*.scss}]
 indent_size = 2
 indent_style = space
 
