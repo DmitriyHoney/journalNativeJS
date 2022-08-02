@@ -14,27 +14,30 @@ function createElement(tag, attrs, ...children) {
 
 const Header = new BaseComponent({
   state: {
-    key: 1,
-    title: 'Header',
+    price: 5,
+    quantity: 2
   },
   computed: {
-    keyUpdated() {
+    total() {
       return this.price * this.quantity;
     }
   },
   methods: {
-    incKey() {
-      this.key++;
+    incPrice() {
+      this.price++;
+      console.log(this);
     }
   },
   template: {
     render({ state, methods }) {
-      return <header class="header">
-        {state.title} {state.key}
+      return <header>
+        <span>Price: {state.price}</span> <br />
+        <button onclick={methods.incPrice}>Inc</button>
       </header>
     }
   }
-});
+}).render();
+
 
 const App = new BaseComponent({
   state: {
@@ -49,11 +52,12 @@ const App = new BaseComponent({
   methods: {
     incPrice() {
       this.price++;
+      console.log(this);
     }
   },
   template: {
     render({ state, methods }) {
-      return <div class="test">
+      return <div>
         <Header />
         <span>Price: {state.price}</span> <br />
         <span>Quantity: {state.quantity}</span> <br />
@@ -65,6 +69,5 @@ const App = new BaseComponent({
 });
 
 window.comp1 = App;
-window.comp2 = Header;
 
 export default App;

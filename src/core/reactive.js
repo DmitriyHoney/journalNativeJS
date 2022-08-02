@@ -41,10 +41,21 @@ class ComponentModel {
 
     this.bindDependencyForState();
     this.initWatchers();
+
+    this._events = {
+      'updatedState': null
+    };
+
+    this._on = ((eventKey, cb) => {
+      if (eventKey === 'updatedState') {
+        this._events[eventKey] = cb;
+      }
+    });
   }
   bindDependencyForState() {
     Object.keys(this.state).forEach((key) => {
       let initValue = this.state[key];
+      const that = this;
       const dep = new Dependency();
       Object.defineProperty(this.state, key, {
         get() {
@@ -54,6 +65,7 @@ class ComponentModel {
         set(value) {
           initValue = value;
           dep.notify();
+          that._events['updatedState'] ? that._events['updatedState']() : '';
         }
       });
     });
@@ -63,6 +75,7 @@ class ComponentModel {
     Object.keys(this.computed).forEach((key) => {
       this.watcher(() => {
         this.state[key] = this.computed[key].bind(this.state)();
+        console.log(this);
       });
     });
   }
@@ -125,6 +138,18 @@ class ComponentView {
   }
 }
 
+export class RenderJSX {
+  constructor(selector, rootComponent) {
+    const $rootHTML = window.document.querySelector(selector);
+    $rootHTML.innerHTML = '';
+    $rootHTML.append(rootComponent.render());
+    rootComponent.on('rerender', (template) => {
+      $rootHTML.innerHTML = '';
+      $rootHTML.append(template);
+    });
+  }
+}
+
 
 class BaseComponent {
   constructor({
@@ -147,8 +172,23 @@ class BaseComponent {
     this.state = this._model.state;
     this.computed = this._model.computed;
     this.methods = this._controller.methods;
-    this.template = this._view.template;
-    return this.template.render();
+    this.template = this._view.template.render();
+    this._events = {
+      'rerender': null
+    };
+    this.on = ((eventType, cb) => {
+      this._events[eventType] = cb;
+    });
+    this._model._on('updatedState', () => {
+      this.template = this._view.template.render();
+      if (this._events['rerender']) {
+        this._events['rerender'](this.template);
+      }
+    });
+    return this;
+  }
+  render() {
+    return this.template;
   }
 }
 

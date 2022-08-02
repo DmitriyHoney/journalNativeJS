@@ -16,18 +16,19 @@ function createElement(tag, attrs, ...children) {
 
 const Header = new BaseComponent({
   state: {
-    key: 1,
-    title: 'Header'
+    price: 5,
+    quantity: 2
   },
   computed: {
-    keyUpdated() {
+    total() {
       return this.price * this.quantity;
     }
 
   },
   methods: {
-    incKey() {
-      this.key++;
+    incPrice() {
+      this.price++;
+      console.log(this);
     }
 
   },
@@ -36,14 +37,14 @@ const Header = new BaseComponent({
       state,
       methods
     }) {
-      return createElement("header", {
-        class: "header"
-      }, state.title, " ", state.key);
+      return createElement("header", null, createElement("span", null, "Price: ", state.price), " ", createElement("br", null), createElement("button", {
+        onclick: methods.incPrice
+      }, "Inc"));
     }
 
   }
-});
-const comp1 = new BaseComponent({
+}).render();
+const App = new BaseComponent({
   state: {
     price: 5,
     quantity: 2
@@ -57,6 +58,7 @@ const comp1 = new BaseComponent({
   methods: {
     incPrice() {
       this.price++;
+      console.log(this);
     }
 
   },
@@ -65,15 +67,12 @@ const comp1 = new BaseComponent({
       state,
       methods
     }) {
-      return createElement("div", {
-        class: "test"
-      }, createElement(Header, null), createElement("span", null, "Price: ", state.price), " ", createElement("br", null), createElement("span", null, "Quantity: ", state.quantity), " ", createElement("br", null), createElement("span", null, "Total: ", state.total), " ", createElement("br", null), createElement("button", {
+      return createElement("div", null, createElement(Header, null), createElement("span", null, "Price: ", state.price), " ", createElement("br", null), createElement("span", null, "Quantity: ", state.quantity), " ", createElement("br", null), createElement("span", null, "Total: ", state.total), " ", createElement("br", null), createElement("button", {
         onclick: methods.incPrice
       }, "Inc"));
     }
 
   }
 });
-window.comp1 = comp1;
-window.comp2 = Header;
-export default comp1;
+window.comp1 = App;
+export default App;

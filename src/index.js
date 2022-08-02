@@ -1,7 +1,8 @@
 
 import App from '@/components/App.js';
+import { RenderJSX } from '@/core/reactive.js';
 
-window.document.getElementById('app').replaceWith(App);
+new RenderJSX('#app', App);
 /*
   Как вызвать перерендеринг точечный,
   я считаю нужен класс в котором есть метод mount
